@@ -33,13 +33,18 @@ function connectSockets(http, session) {
             socket.join('watching:' + userId)
         })
         socket.on('set-user-socket', userId => {
-            logger.debug(`Setting (${socket.id}) socket.userId = ${userId}`)
+            logger.debug(`socket.myTopic ${socket.myTopic}`)
+            logger.debug(`Setting socket.id (${socket.id}) socket.userId = ${userId}`)
             socket.userId = userId
         })
         socket.on('unset-user-socket', () => {
+            logger.debug(`Delete socket.id (${socket.id}) socket.userId = ${userId}`)
             delete socket.userId
         })
-
+        socket.on('saved-board', boardId => {
+            console.log('On saved board - boardId ', boardId)
+            gIo.to(boardId).emit('reload-board', boardId)
+        })
     })
 }
 
