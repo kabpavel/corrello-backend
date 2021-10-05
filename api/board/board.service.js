@@ -5,7 +5,7 @@ const asyncLocalStorage = require('../../services/als.service')
 
 async function query(filterBy = {}) {
     const criteria = _buildCriteria(filterBy)
-    console.log('filterBy',filterBy)
+    console.log('filterBy', filterBy)
 
     try {
         const collection = await dbService.getCollection('board')
@@ -28,12 +28,13 @@ async function remove(boardId) {
 }
 
 async function save(board) {
-    const {title, createdBy, style, labels, members, lists, activities} = board
-    
+    const { title, createdBy, style, labels, members, lists, activities } = board
+
+    logger.info('board-saved', board)
     let saveBoard
-    if(board._id)
-    {
-    
+
+    if (board._id) {
+
         try {
             savedBoard = {
                 _id: ObjectId(board._id),
@@ -61,9 +62,7 @@ async function save(board) {
                 createdAt: ObjectId(board._id).getTimestamp(),
                 title: board.title,
                 createdBy: board.createdBy,
-                style: {
-                    background: board.background
-                },
+                style: board.style,
                 labels: [],
                 members: [board.createdBy],
                 lists: [],
@@ -82,7 +81,7 @@ async function save(board) {
 
 async function getById(boardId) {
     try {
-        console.log('boardId',boardId)
+        console.log('boardId', boardId)
         const collection = await dbService.getCollection('board')
         const board = await collection.findOne({ '_id': ObjectId(boardId) })
         return board
@@ -94,11 +93,11 @@ async function getById(boardId) {
 
 function _buildCriteria(filter) {
     const criteria = {}
-    
+
     if (filter.boardId) {
         criteria.boardId = ObjectId(filter.boardId);
     }
-    
+
     return criteria
 }
 
