@@ -1,6 +1,10 @@
 const asyncLocalStorage = require('./als.service');
 const logger = require('./logger.service');
 
+const SOCKET_EVENT_ON_BOARD_SAVED = 'on-board-saved';
+const SOCKET_EVENT_START_BOARD = 'start-board';
+const SOCKET_EVENT_ON_RELOAD_BOARD = 'reload-board';
+
 var gIo = null
 
 function connectSockets(http, session) {
@@ -14,26 +18,28 @@ function connectSockets(http, session) {
         socket.on('disconnect', socket => {
             console.log('Someone disconnected')
         })
-        socket.on('chat topic', topic => {
-            if (socket.myTopic === topic) return;
-            if (socket.myTopic) {
-                socket.leave(socket.myTopic)
+    
+        socket.on(SOCKET_EVENT_START_BOARD, boardId => {
+            console.log(SOCKET_EVENT_START_BOARD, boardId);
+            if (socket.currBoardId === boardId) return;
+            if (socket.currBoardId) {
+                socket.leave(socket.currBoardId)
             }
-            socket.join(topic)
-            socket.myTopic = topic
+            socket.join(boardId)
+            socket.currBoardId = boardId
         })
-        socket.on('chat newMsg', msg => {
-            console.log('Emitting Chat msg', msg);
-            // emits to all sockets:
-            // gIo.emit('chat addMsg', msg)
-            // emits only to sockets in the same room
-            gIo.to(socket.myTopic).emit('chat addMsg', msg)
+        console.log("new here")
+        socket.on(SOCKET_EVENT_ON_BOARD_SAVED, boardId => {
+            
+            console.log('on-board-saved boardId', boardId);
+            socket.broadcast.to(socket.currBoardId).emit(SOCKET_EVENT_ON_RELOAD_BOARD, boardId)
         })
+
+
         socket.on('user-watch', userId => {
             socket.join('watching:' + userId)
         })
         socket.on('set-user-socket', userId => {
-            logger.debug(`socket.myTopic ${socket.myTopic}`)
             logger.debug(`Setting socket.id (${socket.id}) socket.userId = ${userId}`)
             socket.userId = userId
         })
@@ -64,21 +70,21 @@ async function emitToUser({ type, data, userId }) {
 }
 
 // Send to all sockets BUT not the current socket 
-async function broadcast({ type, data, room = null, userId }) {
-    console.log('BROADCASTING', JSON.stringify(arguments));
-    const excludedSocket = await _getUserSocket(userId)
-    if (!excludedSocket) {
-        logger.debug('Shouldnt happen, socket not found')
-        _printSockets();
-        return;
-    }
-    logger.debug('broadcast to all but user: ', userId)
-    if (room) {
-        excludedSocket.broadcast.to(room).emit(type, data)
-    } else {
-        excludedSocket.broadcast.emit(type, data)
-    }
-}
+// async function broadcast({ type, data, room = null, userId }) {
+//     console.log('BROADCASTING', JSON.stringify(arguments));
+//     const excludedSocket = await _getUserSocket(userId)
+//     if (!excludedSocket) {
+//         logger.debug('Shouldnt happen, socket not found')
+//         _printSockets();
+//         return;
+//     }
+//     logger.debug('broadcast to all but user: ', userId)
+//     if (room) {
+//         excludedSocket.broadcast.to(room).emit(type, data)
+//     } else {
+//         excludedSocket.broadcast.emit(type, data)
+//     }
+// }
 
 async function _getUserSocket(userId) {
     const sockets = await _getAllSockets();
@@ -109,7 +115,7 @@ module.exports = {
     connectSockets,
     emitTo,
     emitToUser,
-    broadcast,
+    //broadcast,
 }
 
 

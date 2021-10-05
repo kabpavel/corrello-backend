@@ -30,9 +30,7 @@ async function remove(boardId) {
 async function save(board) {
     const { title, createdBy, style, labels, members, lists, activities } = board
 
-    logger.info('board-saved', board)
     let saveBoard
-
     if (board._id) {
 
         try {
@@ -81,7 +79,7 @@ async function save(board) {
 
 async function getById(boardId) {
     try {
-        console.log('boardId', boardId)
+        //console.log('boardId', boardId)
         const collection = await dbService.getCollection('board')
         const board = await collection.findOne({ '_id': ObjectId(boardId) })
         return board
