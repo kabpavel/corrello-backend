@@ -1,13 +1,14 @@
 const asyncLocalStorage = require('./als.service');
 const logger = require('./logger.service');
 
-const SOCKET_EVENT_ON_BOARD_SAVED = 'on-board-saved';
-const SOCKET_EVENT_START_BOARD = 'start-board';
-const SOCKET_EVENT_ON_RELOAD_BOARD = 'reload-board';
-
 var gIo = null
 
 function connectSockets(http, session) {
+
+    const SOCKET_EVENT_ON_BOARD_SAVED = 'on-board-saved';
+    const SOCKET_EVENT_START_BOARD = 'start-board';
+    const SOCKET_EVENT_ON_RELOAD_BOARD = 'reload-board';
+
     gIo = require('socket.io')(http, {
         cors: {
             origin: '*',
@@ -18,9 +19,9 @@ function connectSockets(http, session) {
         socket.on('disconnect', socket => {
             console.log('Someone disconnected')
         })
-    
-        socket.on(SOCKET_EVENT_START_BOARD, boardId => {
-            console.log(SOCKET_EVENT_START_BOARD, boardId);
+
+        socket.on('SOCKET_EVENT_START_BOARD', boardId => {
+            console.log('SOCKET_EVENT_START_BOARD', boardId);
             if (socket.currBoardId === boardId) return;
             if (socket.currBoardId) {
                 socket.leave(socket.currBoardId)
@@ -28,11 +29,11 @@ function connectSockets(http, session) {
             socket.join(boardId)
             socket.currBoardId = boardId
         })
-        console.log("new here")
-        socket.on(SOCKET_EVENT_ON_BOARD_SAVED, boardId => {
-            
+
+        socket.on('SOCKET_EVENT_ON_BOARD_SAVED', boardId => {
+
             console.log('on-board-saved boardId', boardId);
-            socket.broadcast.to(socket.currBoardId).emit(SOCKET_EVENT_ON_RELOAD_BOARD, boardId)
+            socket.broadcast.to(socket.currBoardId).emit('SOCKET_EVENT_ON_RELOAD_BOARD', boardId)
         })
 
 
