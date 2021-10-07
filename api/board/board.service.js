@@ -65,7 +65,8 @@ async function save(board) {
                 labels: [],
                 members: [board.createdBy],
                 lists: [],
-                activities: []
+                activities: [],
+                star: false
             }
             const collection = await dbService.getCollection('board')
             await collection.insertOne(savedBoard)
