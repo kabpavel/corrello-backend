@@ -36,6 +36,16 @@ function connectSockets(http, session) {
             socket.broadcast.to(socket.currBoardId).emit('SOCKET_EVENT_ON_RELOAD_BOARD', boardId)
         })
 
+        socket.on('SOCKET_EVENT_ON_NEW_ACTIVITY', activity => {
+            if (activity.card.members) {
+                console.log('app activty', activity)
+                activity.card.members.forEach(member => {
+                    console.log('members in card activity:', member)
+                    if (member._id !== activity.byMember._id) gIo.to(member._id).emit('SOCKET_EVENT_ON_ADD_ACTIVITY', activity)
+                })
+            }
+        })
+
 
         socket.on('user-watch', userId => {
             socket.join('watching:' + userId)
