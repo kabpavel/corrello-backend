@@ -54,7 +54,7 @@ function connectSockets(http, session) {
             logger.debug(`Setting socket.id (${socket.id}) socket.userId = ${userId}`)
             socket.userId = userId
         })
-        socket.on('unset-user-socket', () => {
+        socket.on('unset-user-socket', (userId) => {
             logger.debug(`Delete socket.id (${socket.id}) socket.userId = ${userId}`)
             delete socket.userId
         })
