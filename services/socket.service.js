@@ -5,10 +5,6 @@ var gIo = null
 
 function connectSockets(http, session) {
 
-    const SOCKET_EVENT_ON_BOARD_SAVED = 'on-board-saved';
-    const SOCKET_EVENT_START_BOARD = 'start-board';
-    const SOCKET_EVENT_ON_RELOAD_BOARD = 'reload-board';
-
     gIo = require('socket.io')(http, {
         cors: {
             origin: '*',
@@ -80,38 +76,16 @@ async function emitToUser({ type, data, userId }) {
     }
 }
 
-// Send to all sockets BUT not the current socket 
-// async function broadcast({ type, data, room = null, userId }) {
-//     console.log('BROADCASTING', JSON.stringify(arguments));
-//     const excludedSocket = await _getUserSocket(userId)
-//     if (!excludedSocket) {
-//         logger.debug('Shouldnt happen, socket not found')
-//         _printSockets();
-//         return;
-//     }
-//     logger.debug('broadcast to all but user: ', userId)
-//     if (room) {
-//         excludedSocket.broadcast.to(room).emit(type, data)
-//     } else {
-//         excludedSocket.broadcast.emit(type, data)
-//     }
-// }
-
 async function _getUserSocket(userId) {
     const sockets = await _getAllSockets();
     const socket = sockets.find(s => s.userId == userId)
     return socket;
 }
 async function _getAllSockets() {
-    // return all Socket instances
+
     const sockets = await gIo.fetchSockets();
     return sockets;
 }
-// function _getAllSockets() {
-//     const socketIds = Object.keys(gIo.sockets.sockets)
-//     const sockets = socketIds.map(socketId => gIo.sockets.sockets[socketId])
-//     return sockets;
-// }
 
 async function _printSockets() {
     const sockets = await _getAllSockets()
@@ -125,8 +99,7 @@ function _printSocket(socket) {
 module.exports = {
     connectSockets,
     emitTo,
-    emitToUser,
-    //broadcast,
+    emitToUser
 }
 
 
