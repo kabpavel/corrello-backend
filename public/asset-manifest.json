@@ -1,0 +1,39 @@
+{
+  "files": {
+    "main.css": "/static/css/main.a7d6d90f.chunk.css",
+    "main.js": "/static/js/main.69975311.chunk.js",
+    "main.js.map": "/static/js/main.69975311.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.ef6b1d0b.js",
+    "runtime-main.js.map": "/static/js/runtime-main.ef6b1d0b.js.map",
+    "static/js/2.9f9fb60e.chunk.js": "/static/js/2.9f9fb60e.chunk.js",
+    "static/js/2.9f9fb60e.chunk.js.map": "/static/js/2.9f9fb60e.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.a7d6d90f.chunk.css.map": "/static/css/main.a7d6d90f.chunk.css.map",
+    "static/js/2.9f9fb60e.chunk.js.LICENSE.txt": "/static/js/2.9f9fb60e.chunk.js.LICENSE.txt",
+    "static/media/main.scss": "/static/media/Alata-Regular.e834207e.ttf",
+    "static/media/add.cb3d7757.svg": "/static/media/add.cb3d7757.svg",
+    "static/media/board.788ec0d7.png": "/static/media/board.788ec0d7.png",
+    "static/media/home-logo.10647ab8.svg": "/static/media/home-logo.10647ab8.svg",
+    "static/media/icon-activity.3738507a.svg": "/static/media/icon-activity.3738507a.svg",
+    "static/media/icon-attachment.66099c4c.svg": "/static/media/icon-attachment.66099c4c.svg",
+    "static/media/icon-checklist.9c7acd5f.svg": "/static/media/icon-checklist.9c7acd5f.svg",
+    "static/media/icon-checklists.c0321893.svg": "/static/media/icon-checklists.c0321893.svg",
+    "static/media/icon-cover.d256c68d.svg": "/static/media/icon-cover.d256c68d.svg",
+    "static/media/icon-dates.671295ac.svg": "/static/media/icon-dates.671295ac.svg",
+    "static/media/icon-description.d15c3b5f.svg": "/static/media/icon-description.d15c3b5f.svg",
+    "static/media/icon-header.9ca7ca02.svg": "/static/media/icon-header.9ca7ca02.svg",
+    "static/media/icon-labels.7301ff61.svg": "/static/media/icon-labels.7301ff61.svg",
+    "static/media/icon-members.55f0cb11.svg": "/static/media/icon-members.55f0cb11.svg",
+    "static/media/loader.4ce56a5f.svg": "/static/media/loader.4ce56a5f.svg",
+    "static/media/logo.8523ccde.png": "/static/media/logo.8523ccde.png",
+    "static/media/notific-bell.6bbbe799.svg": "/static/media/notific-bell.6bbbe799.svg",
+    "static/media/paperclip-solid.8d140ed2.svg": "/static/media/paperclip-solid.8d140ed2.svg",
+    "static/media/star.5e5b4703.svg": "/static/media/star.5e5b4703.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ef6b1d0b.js",
+    "static/js/2.9f9fb60e.chunk.js",
+    "static/css/main.a7d6d90f.chunk.css",
+    "static/js/main.69975311.chunk.js"
+  ]
+}
