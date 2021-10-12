@@ -28,7 +28,7 @@ async function remove(boardId) {
 }
 
 async function save(board) {
-    const { title, createdBy, style, labels, members, lists, activities, star ,recentBoardInsert} = board
+    const { title, createdBy, style, labels, members, lists, activities, star, recentBoardInsert } = board
 
     let saveBoard
     if (board._id) {
