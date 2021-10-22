@@ -28,7 +28,7 @@ async function remove(boardId) {
 }
 
 async function save(board) {
-    const { title, createdBy, style, labels, members, lists, activities, star, recentBoardInsert } = board
+    const { title, createdBy, style, labels, members, lists, activities, star, recentBoardInsert, chatHistory } = board
 
     let saveBoard
     if (board._id) {
@@ -44,7 +44,8 @@ async function save(board) {
                 lists,
                 activities: activities.slice(0, 20),
                 star,
-                recentBoardInsert
+                recentBoardInsert,
+                chatHistory
             }
             const collection = await dbService.getCollection('board')
             await collection.updateOne({ _id: savedBoard._id }, { $set: savedBoard })
@@ -67,7 +68,8 @@ async function save(board) {
                 members: [board.createdBy],
                 lists: [],
                 activities: [],
-                star: false
+                star: false,
+                chatHistory: []
             }
             const collection = await dbService.getCollection('board')
             await collection.insertOne(savedBoard)
