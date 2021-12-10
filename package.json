@@ -3,8 +3,6 @@
     "version": "1.0.0",
     "description": "production ready server",
     "main": "server.js",
-
-    
     "scripts": {
         "start": "set NODE_ENV=development&&node&&nodemon server.js",
         "server:dev": "set NODE_ENV=development&&nodemon server.js",
@@ -22,9 +20,7 @@
         "fund": "^1.0.0",
         "google-auth-library": "^7.10.1",
         "mongodb": "^3.2.7",
+        "nodemon": "^2.0.15",
         "socket.io": "^4.2.0"
-    },
-    "devDependencies": {
-        "nodemon": "1.18.10"
     }
 }
