@@ -74,10 +74,18 @@ function connectSockets(http, session) {
                 });
             }
         });
+        socket.on('user logout', userId => {
+            gIo.emit('user disconnected', userId)
+        })
+        socket.on('user-watch', userId => {
+            //for notifications
+            socket.join(userId)
+            //for login
+            socket.userId = userId
+            gIo.emit('user connected', userId)
+            // gIo.to(socket.userId).emit('user connected', userId)
+        })
 
-        socket.on('user-watch', (userId) => {
-            socket.join('watching:' + userId);
-        });
         socket.on('set-user-socket', (userId) => {
             logger.debug(
                 `Setting socket.id (${socket.id}) socket.userId = ${userId}`

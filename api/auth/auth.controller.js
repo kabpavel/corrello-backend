@@ -47,12 +47,12 @@ async function logout(req, res) {
 async function googleLogin(req, res) {
     try {
         const { tokenId } = req.body
+        console.log(tokenId)
         const googleRes = await client.verifyIdToken({ idToken: tokenId, audience: '900522146438-q7vvlhv5tjnnh4pdvs7mv2c133sbnmpi.apps.googleusercontent.com' })
         const { email, name, picture } = googleRes.payload
-        console.log('user?', googleRes.payload)
         const user = await userService.getByUsername(email)
         if (!user) {
-            const account = await authService.signup(email, tokenId, name, picture)
+            const account = await authService.signup(email, tokenId, name)
             logger.debug(`auth.route - new account created: ` + JSON.stringify(account))
         }
         const googleUser = await authService.login(email, tokenId, picture)
@@ -61,8 +61,7 @@ async function googleLogin(req, res) {
         res.json(googleUser)
 
     } catch (err) {
-
-        res.status(501).send({ err: 'Failed to login with google' })
+        res.status(500).send({ err: 'Failed to login with google' })
     }
 }
 

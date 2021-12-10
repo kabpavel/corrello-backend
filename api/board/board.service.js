@@ -85,7 +85,6 @@ async function save(board) {
 
 async function getById(boardId) {
     try {
-        //console.log('boardId', boardId)
         const collection = await dbService.getCollection('board')
         const board = await collection.findOne({ '_id': ObjectId(boardId) })
         return board
